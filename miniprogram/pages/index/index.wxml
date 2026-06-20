@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="hero">
+    <text class="hero-title">隐私优先的 PDF 工具箱</text>
+    <text class="hero-desc">所有处理在本地完成，文件不会上传</text>
+  </view>
+
+  <view class="tools-grid">
+    <view class="tool-card" data-tool="merge" bindtap="openTool">
+      <view class="tool-icon">📄+📄</view>
+      <text class="tool-name">合并 PDF</text>
+      <text class="tool-desc">将多个 PDF 合并为一个文件</text>
+      <view class="badge badge-free">免费</view>
+    </view>
+
+    <view class="tool-card" data-tool="split" bindtap="openTool">
+      <view class="tool-icon">✂️</view>
+      <text class="tool-name">拆分 PDF</text>
+      <text class="tool-desc">按页码范围拆分为多个文件</text>
+      <view class="badge badge-free">免费</view>
+    </view>
+
+    <view class="tool-card" data-tool="compress" bindtap="openTool">
+      <view class="tool-icon">🗜️</view>
+      <text class="tool-name">压缩 PDF</text>
+      <text class="tool-desc">减小文件体积，便于存储</text>
+      <view class="badge badge-{{isPro ? 'unlocked' : 'pro'}}">{{isPro ? '已解锁' : 'Pro'}}</view>
+    </view>
+
+    <view class="tool-card" data-tool="reorder" bindtap="openTool">
+      <view class="tool-icon">🔀</view>
+      <text class="tool-name">页面排序</text>
+      <text class="tool-desc">调整页面顺序，删除不需要的页</text>
+      <view class="badge badge-{{isPro ? 'unlocked' : 'pro'}}">{{isPro ? '已解锁' : 'Pro'}}</view>
+    </view>
+  </view>
+
+  <view class="pro-section" bindtap="goPro" wx:if="{{!isPro}}">
+    <text class="pro-title">💎 升级 Pro</text>
+    <text class="pro-desc">一次性付费 $19，解锁全部功能</text>
+    <text class="pro-link">了解详情 →</text>
+  </view>
+</view>
