@@ -1,0 +1,10 @@
+.file-count {
+  text-align: center;
+  margin: 16rpx 0;
+}
+
+.file-remove {
+  color: #dc2626;
+  padding: 8rpx 16rpx;
+  font-size: 28rpx;
+}
