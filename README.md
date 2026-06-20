@@ -1,126 +1,67 @@
-# PDFKit — Privacy-First PDF Toolkit
+# PDFKit - 隐私优先的 PDF 工具箱
 
-> **All PDF processing happens in your browser. Files never leave your computer.**
-> One-time payment, lifetime access, free updates.
+> 在浏览器和微信中本地处理 PDF，文件不上传任何服务器。
+> 一次性付费 $19，终身使用。
 
-## Live Demo
+## 在线体验
 
-[pdf-toolkit-yang15.vercel.app](https://pdf-toolkit-yang15.vercel.app)
+🌐 **Web 版**: https://analysissmiths-dot.github.io/pdf-toolkit/
 
-## Features
+📱 **微信小程序**: 搜索「PDFKit」或扫码体验（开发版）
 
-| Tool | Free Tier | Pro Tier |
-|------|-----------|----------|
-| Merge PDF | Up to 2 files | Unlimited |
-| Split PDF | Up to 10 pages | Unlimited |
-| Compress PDF | Locked | ✓ |
-| Reorder Pages | Locked | ✓ |
+## 功能
 
-**Price:** $19 one-time payment, lifetime access.
+| 功能 | 免费版 | Pro 版 |
+|------|--------|--------|
+| 📄 合并 PDF | ✅ 限 2 个文件 | ✅ 无限制 |
+| ✂️ 拆分 PDF | ✅ 限 10 页 | ✅ 无限制 |
+| 🗜️ 压缩 PDF | ❌ | ✅ |
+| 🔀 页面排序 | ❌ | ✅ |
 
-## Tech Stack
+- 所有处理在本地完成，不上传任何文件
+- 使用 pdf-lib 进行纯前端 PDF 处理
+- 一次性付费 $19，终身使用
 
-- Pure HTML/CSS/JS — no build tools needed
-- [pdf-lib](https://pdf-lib.org/) — all PDF operations in-browser
-- [LemonSqueezy](https://lemonsqueezy.com) — payment processing
-- Hosted on Vercel (free tier)
+## 技术栈
 
-## Quick Start (Local Development)
+- **Web 版**: HTML + CSS + JavaScript (Vanilla) + pdf-lib
+- **微信小程序**: WXML + WXSS + JavaScript + pdf-lib
+- **部署**: GitHub Pages (Web) + 微信小程序 (Mini Program)
+
+## 付费
+
+使用 LemonSqueezy 收款，HMAC 签名密钥验证。
+
+**Demo 密钥**: `PDFKIT-DEMO-2026-FULL`
+
+## 本地开发
 
 ```bash
-# Serve locally
+# Web 版
 cd pdf-toolkit
-python3 -m http.server 8080
-# Open http://localhost:8080
+# 直接用浏览器打开 index.html 即可
+
+# 微信小程序
+cd miniprogram
+npm install
+# 用微信开发者工具打开此目录
 ```
 
-## Deployment
+## 项目结构
 
-### Option A: Deploy to Vercel (Recommended)
-
-1. Push to GitHub:
-   ```bash
-   git remote add origin <your-github-repo-url>
-   git push -u origin main
-   ```
-2. Import your repo at [vercel.com/new](https://vercel.com/new)
-3. Set environment variables in Vercel dashboard:
-   - `LICENSE_SECRET` — Your HMAC signing secret
-   - `VALID_LICENSES` — Comma-separated `KEY:SIGNATURE` pairs
-4. Deploy — done!
-
-### Option B: Deploy via Drag & Drop
-
-1. Go to [vercel.com/new](https://vercel.com/new)
-2. Select "Deploy without Git"
-3. Drag the `pdf-toolkit` folder
-4. Done!
-
-## Setting Up Payments (LemonSqueezy)
-
-### Step 1: Create a LemonSqueezy Account
-
-1. Sign up at [lemonsqueezy.com](https://lemonsqueezy.com)
-2. Create a store
-3. Create a product:
-   - Name: "PDFKit Pro"
-   - Price: $19 (one-time)
-   - No variants needed
-
-### Step 2: Get Your Checkout URL
-
-1. In LemonSqueezy dashboard → Products → Your product
-2. Go to "Checkout" tab
-3. Copy the "Buy Now" URL
-4. Replace the URL in `js/payment.js`:
-   ```js
-   CHECKOUT_URL: 'https://your-store.lemonsqueezy.com/checkout/buy/...'
-   ```
-
-### Step 3: Set Up Webhook (for automatic license delivery)
-
-1. Deploy the API endpoints first
-2. In LemonSqueezy → Settings → Webhooks:
-   - URL: `https://your-domain.vercel.app/api/lemon-squeezy-webhook`
-   - Events: Select "order_created"
-   - Secret: Set a secure random string
-3. Set `LEMON_SQUEEZY_WEBHOOK_SECRET` in Vercel env vars
-
-### Step 4: Add License Key to Customer
-
-On successful purchase:
-1. The webhook generates a license key
-2. In production: email it to the customer automatically
-3. Add the key to `VALID_LICENSES` env var: `KEY:SIGNATURE`
-
-## API Endpoints
-
-### `POST /api/verify-license`
-
-Validate a license key.
-
-**Request:**
-```json
-{ "key": "PDFKIT-XXXX-XXXX-XXXX-XXXX" }
 ```
-
-**Response:**
-```json
-{ "valid": true, "key": "PDFKIT-...", "expires": "lifetime" }
+pdf-toolkit/
+├── index.html          # Web 版入口
+├── css/style.css       # 样式
+├── js/
+│   ├── app.js          # Web 应用主逻辑
+│   ├── payment.js      # 付费/许可系统
+│   └── tools/          # PDF 工具
+│       ├── merge.js
+│       ├── split.js
+│       ├── compress.js
+│       └── reorder.js
+├── api/                # 可选的服务端 API
+├── miniprogram/        # 微信小程序源码
+└── .github/workflows/  # CI/CD
 ```
-
-### `POST /api/lemon-squeezy-webhook`
-
-Receives LemonSqueezy purchase webhooks. Generates license keys for paid orders.
-
-## Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `LICENSE_SECRET` | HMAC secret for signing license keys |
-| `VALID_LICENSES` | Comma-separated `KEY:SIGNATURE` pairs |
-| `LEMON_SQUEEZY_WEBHOOK_SECRET` | Webhook signature verification |
-
-## License
-
-MIT
