@@ -1,0 +1,15 @@
+{
+  "name": "pdfkit-miniprogram",
+  "version": "1.0.0",
+  "description": "Privacy-first PDF toolkit for WeChat Mini Program",
+  "main": "app.js",
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
