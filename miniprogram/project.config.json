@@ -36,7 +36,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "3.7.9",
-  "appid": "YOUR_APPID",
+  "appid": "gh_49e190a8cc3e",
   "projectname": "PDFKit",
   "debugOptions": { "hidedInDevtools": [] },
   "scripts": {},
