@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="card" style="text-align:center;border-color:#2563eb;background:#dbeafe;margin-bottom:40rpx;">
+    <text style="font-size:64rpx;display:block;margin-bottom:16rpx;">💎</text>
+    <text style="font-size:48rpx;font-weight:800;color:#2563eb;display:block;">$19</text>
+    <text style="font-size:28rpx;color:#64748b;display:block;margin:12rpx 0;">一次性付费，终身使用</text>
+  </view>
+
+  <view class="card">
+    <view class="feature-item">
+      <text class="feature-icon">✓</text>
+      <text>全部功能无限制使用</text>
+    </view>
+    <view class="feature-item">
+      <text class="feature-icon">✓</text>
+      <text>本地处理，不上传任何文件</text>
+    </view>
+    <view class="feature-item">
+      <text class="feature-icon">✓</text>
+      <text>免费更新</text>
+    </view>
+    <view class="feature-item">
+      <text class="feature-icon">✓</text>
+      <text>30 天退款保证</text>
+    </view>
+  </view>
+
+  <button class="btn-primary" style="margin-top:40rpx;" bindtap="buyPro">💳 立即购买</button>
+
+  <view style="margin-top:40rpx;">
+    <text style="font-size:24rpx;font-weight:500;display:block;margin-bottom:16rpx;">已有许可密钥？</text>
+    <view class="input-group">
+      <input class="input" placeholder="输入密钥" model:value="{{licenseKey}}"/>
+    </view>
+    <button class="btn-primary" bindtap="activateLicense">激活</button>
+    <text wx:if="{{activateMsg}}" style="display:block;text-align:center;margin-top:12rpx;font-size:24rpx;color:{{activateSuccess ? '#16a34a' : '#dc2626'}}">{{activateMsg}}</text>
+  </view>
+</view>
