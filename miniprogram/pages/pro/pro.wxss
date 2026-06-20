@@ -1,0 +1,23 @@
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 12rpx 0;
+  font-size: 26rpx;
+}
+
+.feature-icon {
+  width: 40rpx;
+  height: 40rpx;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40rpx;
+  font-size: 22rpx;
+  flex-shrink: 0;
+}
+
+.input-group {
+  margin-bottom: 16rpx;
+}
