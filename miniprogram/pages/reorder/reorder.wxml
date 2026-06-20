@@ -1,0 +1,46 @@
+<view class="container">
+  <view wx:if="{{!isPro}}">
+    <view class="card" style="text-align:center;border-color:#2563eb;background:#dbeafe;">
+      <text style="font-size:80rpx;display:block;">🔒</text>
+      <text style="font-size:32rpx;font-weight:600;display:block;margin:16rpx 0;">Pro 专属功能</text>
+      <text class="text-muted">购买 Pro 后可页面排序和删除功能</text>
+    </view>
+    <button class="btn-primary" bindtap="goPro">💳 购买 Pro - $19</button>
+  </view>
+
+  <view wx:else>
+    <text class="page-title">页面排序</text>
+    <text class="page-desc">调整页面顺序，删除不需要的页面</text>
+
+    <view class="drop-zone" bindtap="chooseFile">
+      <view class="drop-zone-icon">📄</view>
+      <text>点击选择 PDF 文件</text>
+    </view>
+
+    <view class="file-item" wx:if="{{file.path}}">
+      <text class="file-name">{{file.name}}</text>
+      <text class="file-size">{{totalPages}} 页</text>
+    </view>
+
+    <view wx:if="{{pages.length > 0}}">
+      <view style="display:flex;justify-content:space-between;margin:16rpx 0;">
+        <text class="text-muted">点击页面标记为删除</text>
+        <button class="btn-ghost" style="width:auto;padding:8rpx 24rpx;" bindtap="resetOrder">↻ 重置</button>
+      </view>
+
+      <view class="page-grid">
+        <view class="page-card {{p.deleted ? 'deleted' : ''}}" wx:for="{{pages}}" wx:key="index" bindtap="toggleDelete" data-index="{{index}}">
+          <view class="page-num">第 {{p.num}} 页</view>
+          <view class="page-icon">📄</view>
+          <view wx:if="{{p.deleted}}" class="deleted-badge">已删除</view>
+        </view>
+      </view>
+
+      <button class="btn-primary" bindtap="applyReorder" disabled="{{!hasChanges}}">✓ 应用并下载</button>
+    </view>
+
+    <view class="progress-bar" wx:if="{{processing}}">
+      <view class="progress-inner" style="width: {{progress}}%"></view>
+    </view>
+  </view>
+</view>
