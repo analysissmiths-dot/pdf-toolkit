@@ -1,0 +1,31 @@
+<view class="container">
+  <text class="page-title">合并 PDF</text>
+  <text class="page-desc">将多个 PDF 文件合并为一个</text>
+
+  <view class="drop-zone" bindtap="chooseFile">
+    <view class="drop-zone-icon">📄</view>
+    <text>点击选择 PDF 文件</text>
+    <text class="text-muted">支持选择多个 PDF 文件</text>
+  </view>
+
+  <view class="file-list" wx:if="{{files.length > 0}}">
+    <view class="file-item" wx:for="{{files}}" wx:key="index">
+      <text class="file-name">{{item.name}}</text>
+      <text class="file-size">{{item.size}}</text>
+      <text class="file-remove" bindtap="removeFile" data-index="{{index}}">✕</text>
+    </view>
+  </view>
+
+  <view class="file-count" wx:if="{{files.length > 0}}">
+    <text class="text-muted">已选 {{files.length}} 个文件</text>
+    <text class="text-muted" wx:if="{{hasLimit}}">（免费版限 {{maxFiles}} 个）</text>
+  </view>
+
+  <button class="btn-primary" disabled="{{files.length < 2 || merging}}" bindtap="mergePDF">
+    {{merging ? '合并中...' : '✨ 合并 PDF'}}
+  </button>
+
+  <view class="progress-bar" wx:if="{{merging}}">
+    <view class="progress-inner" style="width: {{progress}}%"></view>
+  </view>
+</view>
