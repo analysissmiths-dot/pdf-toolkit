@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDFKit - 隐私优先的 PDF 工具箱</title>
+  <meta name="description" content="在浏览器本地处理 PDF，不上传任何文件。一次性付费，终身使用。">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>📄</text></svg>">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="4" y="2" width="24" height="28" rx="3" fill="#2563eb"/>
+          <path d="M10 10h12M10 16h12M10 22h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-text">PDFKit</span>
+        <span class="logo-badge">Beta</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost" id="licenseBtn">🔑 已有许可</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>隐私优先的 PDF 工具箱</h1>
+    <p class="hero-subtitle">所有处理在浏览器本地完成，文件不会上传到任何服务器。<br>一次性付费，终身使用，免费更新。</p>
+  </section>
+
+  <!-- Tools Grid -->
+  <section class="tools-section">
+    <div class="tools-grid">
+      <!-- Merge -->
+      <div class="tool-card" data-tool="merge">
+        <div class="tool-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="4" width="14" height="32" rx="2" fill="#2563eb" opacity="0.7"/>
+            <rect x="22" y="4" width="14" height="32" rx="2" fill="#2563eb" opacity="0.4"/>
+            <path d="M20 2v36" stroke="#2563eb" stroke-width="2" stroke-dasharray="4"/>
+          </svg>
+        </div>
+        <h3>合并 PDF</h3>
+        <p>将多个 PDF 文件合并为一个</p>
+        <span class="badge free-badge">免费试用</span>
+      </div>
+
+      <!-- Split -->
+      <div class="tool-card" data-tool="split">
+        <div class="tool-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="4" width="32" height="32" rx="2" fill="#2563eb"/>
+            <line x1="20" y1="4" x2="20" y2="36" stroke="#fff" stroke-width="2"/>
+            <path d="M14 18l-6 6 6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M26 18l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <h3>拆分 PDF</h3>
+        <p>按页码或范围拆分为多个文件</p>
+        <span class="badge free-badge">免费试用</span>
+      </div>
+
+      <!-- Compress -->
+      <div class="tool-card" data-tool="compress">
+        <div class="tool-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="4" width="32" height="32" rx="2" fill="#2563eb"/>
+            <path d="M12 26l8-12 8 12H12z" fill="#fff" opacity="0.8"/>
+            <rect x="10" y="28" width="20" height="3" rx="1" fill="#fff" opacity="0.5"/>
+          </svg>
+        </div>
+        <h3>压缩 PDF</h3>
+        <p>减小文件体积，便于分享和存储</p>
+        <span class="badge pro-badge">Pro</span>
+      </div>
+
+      <!-- Reorder -->
+      <div class="tool-card" data-tool="reorder">
+        <div class="tool-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="4" width="32" height="32" rx="2" fill="#2563eb"/>
+            <path d="M8 12h24M8 20h24M8 28h24" stroke="#fff" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle cx="14" cy="12" r="3" fill="#fff" opacity="0.8"/>
+            <circle cx="26" cy="20" r="3" fill="#fff" opacity="0.8"/>
+            <circle cx="18" cy="28" r="3" fill="#fff" opacity="0.8"/>
+          </svg>
+        </div>
+        <h3>页面排序</h3>
+        <p>拖拽调整页面顺序，删除不需要的页面</p>
+        <span class="badge pro-badge">Pro</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tool Workspace (hidden by default) -->
+  <div class="workspace-overlay hidden" id="workspace">
+    <div class="workspace-panel">
+      <div class="workspace-header">
+        <h2 id="workspaceTitle">PDF 合并工具</h2>
+        <div class="workspace-actions">
+          <span class="badge pro-badge" id="workspaceBadge">Pro</span>
+          <button class="btn btn-icon" id="closeWorkspace" title="关闭">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="workspace-body" id="workspaceBody">
+        <!-- Tool content rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- License Modal -->
+  <div class="modal-overlay hidden" id="licenseModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>激活许可</h2>
+        <button class="btn btn-icon" onclick="closeLicenseModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>输入你的购买许可密钥以解锁全部 Pro 功能。</p>
+        <div class="input-group">
+          <input type="text" id="licenseKeyInput" placeholder="XXXX-XXXX-XXXX-XXXX" class="input">
+          <button class="btn btn-primary" id="activateBtn">激活</button>
+        </div>
+        <p class="error-message hidden" id="licenseError"></p>
+        <p class="success-message hidden" id="licenseSuccess"></p>
+        <div class="modal-divider"></div>
+        <p class="text-muted">还没有购买？</p>
+        <button class="btn btn-primary btn-block" id="purchaseBtn">💳 购买永久许可 — $19</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="modal-overlay hidden" id="paymentModal">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h2>确认购买</h2>
+        <button class="btn btn-icon" onclick="closePaymentModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="pricing-card">
+          <div class="price">$19</div>
+          <p class="price-label">一次性付费，终身使用</p>
+          <ul class="price-features">
+            <li>所有 Pro 功能无限制使用</li>
+            <li>本地处理，不上传任何文件</li>
+            <li>免费更新</li>
+            <li>30 天退款保证</li>
+          </ul>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" id="checkoutBtn">
+          前往付款 (LemonSqueezy)
+        </button>
+        <p class="text-muted text-sm text-center mt-2">支付由 LemonSqueezy 安全处理</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toast"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>所有处理在本地浏览器完成，我们不存储任何文件。</p>
+    <p class="text-muted text-sm">PDFKit &copy; 2026</p>
+  </footer>
+
+  <!-- Libraries -->
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://unpkg.com/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js"></script>
+
+  <!-- App -->
+  <script src="js/payment.js"></script>
+  <script src="js/tools/merge.js"></script>
+  <script src="js/tools/split.js"></script>
+  <script src="js/tools/compress.js"></script>
+  <script src="js/tools/reorder.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
