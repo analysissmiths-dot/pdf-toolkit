@@ -1,0 +1,38 @@
+<view class="container">
+  <text class="page-title">拆分 PDF</text>
+  <text class="page-desc">按页码范围拆分为多个文件</text>
+
+  <view class="drop-zone" bindtap="chooseFile">
+    <view class="drop-zone-icon">📄</view>
+    <text>点击选择 PDF 文件</text>
+  </view>
+
+  <view class="file-item" wx:if="{{file.path}}">
+    <text class="file-name">{{file.name}}</text>
+    <text class="file-size">{{file.size}} · 共 {{totalPages}} 页</text>
+  </view>
+
+  <view class="split-inputs" wx:if="{{file.path}}">
+    <view class="input-group">
+      <text class="input-label">从页码</text>
+      <input class="input" type="number" value="{{splitStart}}" bindinput="onStartChange" min="1" max="{{totalPages}}"/>
+    </view>
+    <view class="input-group">
+      <text class="input-label">到页码</text>
+      <input class="input" type="number" value="{{splitEnd}}" bindinput="onEndChange" min="1" max="{{totalPages}}"/>
+    </view>
+  </view>
+
+  <view class="action-row" wx:if="{{file.path}}">
+    <button class="btn-primary" style="flex:1" bindtap="splitRange" disabled="{{splitting}}">
+      {{splitting ? '处理中...' : '📄 提取范围'}}
+    </button>
+    <button class="btn-primary" style="flex:1" bindtap="splitAll" disabled="{{splitting}}">
+      {{splitting ? '处理中...' : '🔪 全部拆为单页'}}
+    </button>
+  </view>
+
+  <view class="progress-bar" wx:if="{{splitting}}">
+    <view class="progress-inner" style="width: {{progress}}%"></view>
+  </view>
+</view>
