@@ -1,0 +1,42 @@
+<view class="container">
+  <view wx:if="{{!isPro}}">
+    <view class="card" style="text-align:center;border-color:#2563eb;background:#dbeafe;">
+      <text style="font-size:80rpx;display:block;">🔒</text>
+      <text style="font-size:32rpx;font-weight:600;display:block;margin:16rpx 0;">Pro 专属功能</text>
+      <text class="text-muted">购买 Pro 后可使用压缩功能</text>
+    </view>
+    <button class="btn-primary" bindtap="goPro">💳 购买 Pro - $19</button>
+  </view>
+
+  <view wx:else>
+    <text class="page-title">压缩 PDF</text>
+    <text class="page-desc">减小文件体积，便于分享和存储</text>
+
+    <view class="drop-zone" bindtap="chooseFile">
+      <view class="drop-zone-icon">📄</view>
+      <text>点击选择要压缩的 PDF</text>
+    </view>
+
+    <view class="file-item" wx:if="{{file.path}}">
+      <text class="file-name">{{file.name}}</text>
+      <text class="file-size">{{file.size}}</text>
+    </view>
+
+    <view class="card" wx:if="{{file.path}}">
+      <text style="font-size:24rpx;font-weight:500;display:block;margin-bottom:12rpx;">压缩质量</text>
+      <slider value="{{quality}}" min="1" max="100" bindchange="onQualityChange" show-value="{{true}}"/>
+      <view class="flex-between">
+        <text class="text-muted">高压缩</text>
+        <text class="text-muted">高质量</text>
+      </view>
+    </view>
+
+    <button class="btn-primary" wx:if="{{file.path}}" bindtap="compressPDF" disabled="{{compressing}}">
+      {{compressing ? '压缩中...' : '⚡ 压缩 PDF'}}
+    </button>
+
+    <view class="progress-bar" wx:if="{{compressing}}">
+      <view class="progress-inner" style="width: {{progress}}%"></view>
+    </view>
+  </view>
+</view>
